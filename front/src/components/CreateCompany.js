@@ -1,20 +1,25 @@
 import React, { useState } from 'react'
-import { gql, useMutation } from '@apollo/client'
+import { useMutation } from '@apollo/client'
+import { FETCH_COMPANIES, ADD_COMPANY } from '../queries/companyQueries'
 
 export default function CreateCompany() {
 
     const [name, setName] = useState("")
     const [location, setLocation] = useState("")
 
-    const [addCompany] = useMutation(ADD_COMPANY)
+    const [addCompany] = useMutation(ADD_COMPANY, {
+        refetchQueries: [
+            FETCH_COMPANIES
+        ]
+    })
 
     const submitCreateCompany = (e) => {
         e.preventDefault();
         addCompany({ variables: { name, location } })
-        .then(() => {
-            setName("")
-            setLocation("")
-        })
+            .then(() => {
+                setName("")
+                setLocation("")
+            })
     }
 
 
@@ -29,14 +34,3 @@ export default function CreateCompany() {
         </div>
     )
 }
-
-
-const ADD_COMPANY = gql`
- mutation ADD_COMPANY($name: String, $location: String) {
-       addCompany(name: $name, location: $location) {
-         id
-         name
-         location
-       }
-     }
-`

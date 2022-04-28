@@ -1,5 +1,6 @@
 import React from 'react'
-import { gql, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
+import {FETCH_COMPANIES} from '../queries/companyQueries'
 
 export default function CompanyList() {
 
@@ -30,13 +31,3 @@ export default function CompanyList() {
     )
 }
 
-
-const FETCH_COMPANIES = gql`
-{
-    companies {
-      id
-      name
-      location
-    }
-  }
-`
