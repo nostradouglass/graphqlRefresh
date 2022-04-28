@@ -1,10 +1,16 @@
 import React, { useState } from 'react'
-
-import { gql, useMutation } from '@apollo/client'
+import { useMutation } from '@apollo/client'
+import { FETCH_USERS, ADD_USER } from '../queries/userQueries';
 
 export default function CreateUser() {
 
-  const [addUser] = useMutation(ADD_USER);
+  const [addUser] = useMutation(ADD_USER,
+    {
+    refetchQueries: [
+      FETCH_USERS
+    ]
+  }
+  );
 
   const [name, setName] = useState("")
   const [age, setAge] = useState("")
@@ -25,13 +31,3 @@ export default function CreateUser() {
     </div>
   )
 }
-
-const ADD_USER = gql`
-mutation ADD_USER($firstName: String, $age: Int) {
-    addUser(firstName:$firstName, age: $age) {
-      id
-      firstName
-      age
-    }
-  }
-`

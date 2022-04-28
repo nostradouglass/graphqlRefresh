@@ -1,6 +1,6 @@
 import pkg from '@prisma/client';
 const { PrismaClient } = pkg;
-import { GraphQLObjectType, GraphQLString, GraphQLInt } from 'graphql'
+import { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLNonNull } from 'graphql'
 import CompanyType from "./types/CompanyType.js"
 import UserType from "./types/UserType.js"
 
@@ -12,7 +12,7 @@ const mutation = new GraphQLObjectType({
         addUser: {
             type: UserType,
             args: {
-                firstName: { type: GraphQLString },
+                firstName: { type: new GraphQLNonNull(GraphQLString) },
                 age: { type: GraphQLInt }
             },
             resolve(parentValue, { firstName, age }) {
@@ -27,7 +27,7 @@ const mutation = new GraphQLObjectType({
         addCompany: {
             type: CompanyType,
             args: {
-                name: { type: GraphQLString },
+                name: { type: new GraphQLNonNull(GraphQLString) },
                 location: { type: GraphQLString }
             },
             resolve(parentValue, { name, location }) {

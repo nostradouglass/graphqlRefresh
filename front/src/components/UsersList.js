@@ -1,6 +1,7 @@
 
 import React from 'react'
-import { gql, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
+import { FETCH_USERS } from '../queries/userQueries'
 
 export default function UsersList() {
 
@@ -29,14 +30,3 @@ export default function UsersList() {
         </div>
     )
 }
-
-const FETCH_USERS = gql`
-{
-    users {
-        id
-        firstName
-        age
-    }
-}
-
-`
