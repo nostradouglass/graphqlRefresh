@@ -15,7 +15,17 @@ export default function CreateCompany() {
 
     const submitCreateCompany = (e) => {
         e.preventDefault();
-        addCompany({ variables: { name, location } })
+        addCompany({ 
+            variables: { name, location },
+            optimisticResponse: {
+                addCompany: {
+                    id: "temp",
+                    name: name,
+                    location: location,
+                    __typename: "CompanyType",
+                }
+            }
+        })
             .then(() => {
                 setName("")
                 setLocation("")
